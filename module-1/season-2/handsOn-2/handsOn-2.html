@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="table">
+        <thead>
+            <td>Name</td>
+            <td>Age</td>
+        </thead>
+
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+    <button id="calculate" type="button">Calculate</button>
+
+    <script>
+        const students = [
+            { name: "erick", age: 30 },
+            { name: "hilmi", age: 30 },
+            { name: "santo", age: 30 }
+        ];
+
+        students.push({ name: "doohan", age: 30 });
+
+        for (let i = 0; i < students.length; i++) {
+            const table = document.getElementById("table");
+            const tblBody = document.getElementById("table-body")
+            const tblRow = document.createElement("tr");
+            const tblColumn = document.createElement("td");
+            const tableText = document.createTextNode(`${students[i].name} ${students[i].age}`);
+
+            tblColumn.appendChild(tableText);
+            tblRow.appendChild(tblColumn);
+            tblBody.appendChild(tblRow)
+            table.appendChild(tblBody);
+
+            table.style.border = "2px black solid";
+        };
+
+        const calculate = document.getElementById("calculate");
+        calculate.addEventListener("click", () => {
+            const average = students.reduce((acc, students) => { return acc + students.age; }, 0);
+            const averageAge = average / students.length;
+            let newPromise = new Promise((resolve, reject) => {
+                console.log("Calculate Start");
+                if (average) {
+                    setTimeout(() => { resolve(`The result is : ${averageAge}`) }, 5000);
+                } else { reject("Can't be solved"); };
+                setTimeout(() => { console.log("Second Called Started"); }, 200);
+                setTimeout(() => { console.log("Second Called Finished"); }, 600);
+                setTimeout(() => { console.log("Third Called Started"); }, 800);
+                setTimeout(() => { console.log("Third Called Finished"); }, 6000);
+            });
+            newPromise.then((result) => { console.log(result); }).catch((error) => { console.log(error); });
+        });
+    </script>
+</body>
+
+</html>
